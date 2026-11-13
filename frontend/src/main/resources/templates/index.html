@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Бассейн — панель</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="nav">
+    <span class="logo">🏊 Бассейн</span>
+    <a th:href="@{/clients}">Клиенты</a>
+    <a th:href="@{/visits}">Посещения</a>
+    <a th:href="@{/reports}">Отчёты</a>
+</nav>
+<main class="container">
+    <h1>Панель управления</h1>
+    <div class="cards">
+        <a class="card" th:href="@{/clients}">
+            <h2>Клиенты</h2><p>Реестр, поиск, регистрация</p>
+        </a>
+        <a class="card" th:href="@{/visits}">
+            <h2>Посещения</h2><p>Check-in / check-out, журнал</p>
+        </a>
+        <a class="card" th:href="@{/reports}">
+            <h2>Отчёты</h2><p>Генерация и скачивание (reporting)</p>
+        </a>
+    </div>
+</main>
+</body>
+</html>

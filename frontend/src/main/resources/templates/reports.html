@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчёты</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="nav">
+    <span class="logo">🏊 Бассейн</span>
+    <a th:href="@{/}">Главная</a>
+    <a th:href="@{/clients}">Клиенты</a>
+    <a th:href="@{/visits}">Посещения</a>
+</nav>
+<main class="container">
+    <h1>Отчёты о посещаемости</h1>
+
+    <form id="reportForm" class="panel">
+        <h2>Сгенерировать</h2>
+        <div class="grid">
+            <label>С <input name="from" type="date" required></label>
+            <label>По <input name="to" type="date" required></label>
+        </div>
+        <button type="submit">Сгенерировать</button>
+        <span id="reportMsg" class="msg"></span>
+    </form>
+
+    <div class="panel">
+        <h2>Готовые отчёты</h2>
+        <button id="refreshReports">Обновить</button>
+        <table id="reportsTable">
+            <thead>
+            <tr><th>ID</th><th>Период</th><th>Сформирован</th><th>Кем</th><th></th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</main>
+<script th:src="@{/js/app.js}"></script>
+<script th:inline="javascript">
+    ReportsPage.init(/*[[${gatewayUrl}]]*/ 'http://localhost:8080');
+</script>
+</body>
+</html>

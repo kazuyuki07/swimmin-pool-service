@@ -1,0 +1,8 @@
+package su.kazuyuki07.swimminpool.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import su.kazuyuki07.swimminpool.entities.Client;
+
+public interface ClientRepository extends JpaRepository<Client, Long>, JpaSpecificationExecutor<Client> {
+}

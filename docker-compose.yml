@@ -1,0 +1,71 @@
+name: swimminpool
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: swimmin_pool
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d swimmin_pool"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  swimmin-pool:
+    build: ./swimmin-pool
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/swimmin_pool
+      DB_USERNAME: postgres
+      DB_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    # порт наружу не обязателен — клиент ходит через gateway,
+    # оставлен для отладки
+    ports:
+      - "8081:8081"
+
+  reporting:
+    build: ./reporting
+    environment:
+      DATABASE_URL: postgres://postgres:root@db:5432/swimmin_pool
+      PORT: "8082"
+      REPORTS_DIR: /app/reports
+    volumes:
+      - reports_data:/app/reports
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8082:8082"   # для отладки; внешний трафик идёт через gateway
+
+  gateway:
+    build: ./gateway
+    environment:
+      # маршруты из application.properties, но через имена сервисов
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_0_URI: http://swimmin-pool:8081
+      SPRING_CLOUD_GATEWAY_MVC_ROUTES_1_URI: http://reporting:8082
+    depends_on:
+      - swimmin-pool
+      - reporting
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    environment:
+      GATEWAY_URL: http://localhost:8080
+    depends_on:
+      - gateway
+    ports:
+      - "8083:8083"
+
+volumes:
+  db_data:
+  reports_data:
