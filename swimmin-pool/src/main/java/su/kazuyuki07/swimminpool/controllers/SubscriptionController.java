@@ -1,6 +1,9 @@
 package su.kazuyuki07.swimminpool.controllers;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import su.kazuyuki07.swimminpool.dto.SubscriptionDTO;
@@ -21,7 +24,7 @@ public class SubscriptionController {
     }
 
     @GetMapping("/{subscriptionId}")
-    public SubscriptionDTO getSubscriptionById(@PathVariable Long subscriptionId) {
+    public SubscriptionDTO getSubscriptionById(@PathVariable UUID subscriptionId) {
         return swimminPoolMapper.subscriptionToSubscriptionDTO(subscriptionService.getSubscriptionById(subscriptionId));
     }
 }

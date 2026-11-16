@@ -1,6 +1,9 @@
 package su.kazuyuki07.swimminpool.services;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import su.kazuyuki07.swimminpool.dto.SubscriptionDTO;
 import su.kazuyuki07.swimminpool.entities.Subscription;
@@ -23,7 +26,7 @@ public class SubscriptionService {
         return subscriptionRepository.findByClientId(clientId).orElseThrow(() -> new NotFoundException("Не найден клиент"));
     }
 
-    public Subscription getSubscriptionById(Long id) {
+    public Subscription getSubscriptionById(UUID id) {
         return subscriptionRepository.findById(id).orElseThrow(() -> new NotFoundException("Не найдена подписка"));
     }
 

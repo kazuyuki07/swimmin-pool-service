@@ -6,8 +6,9 @@ import org.springframework.data.repository.query.Param;
 import su.kazuyuki07.swimminpool.entities.Subscription;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
+public interface SubscriptionRepository extends JpaRepository<Subscription, UUID> {
     Optional<Subscription> findByClientId(Long clientId);
 
     @Query(value = """
