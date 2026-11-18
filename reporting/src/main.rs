@@ -2,6 +2,7 @@ mod report;
 mod template;
 
 use axum::{
+    body::Body,
     extract::{Path, Query, State},
     http::{header, StatusCode},
     response::{IntoResponse, Response},
@@ -101,7 +102,7 @@ async fn download_report(
     })?;
     let file_name = path.rsplit('/').next().unwrap_or("report.txt");
     let disposition = format!("attachment; filename=\"{file_name}\"");
-    let mut resp = Response::new(content.into_body());
+    let mut resp = Response::new(Body::from(content));
     resp.headers_mut()
         .insert(header::CONTENT_TYPE, "text/plain; charset=utf-8".parse().unwrap());
     resp.headers_mut()

@@ -1,7 +1,7 @@
 //! Агрегация статистики за период и рендер отчёта из шаблона.
 
 use anyhow::{Context, Result};
-use chrono::{Duration, NaiveDate, NaiveDateTime};
+use chrono::{Datelike, Duration, NaiveDate, NaiveDateTime};
 use serde::Serialize;
 use sqlx::{FromRow, PgPool};
 use std::collections::HashMap;
